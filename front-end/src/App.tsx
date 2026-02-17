@@ -2,9 +2,14 @@ import { useState } from "react";
 import Header from "./components/Header";
 import Uploader from "./components/Uploader";
 import ImageProcessor from "./components/ImageProcessor";
+import { type OrientationType } from "./types/orientation";
 
 const App = () => {
-  const [images, setImages] = useState<any>([]);
+  const [image, setImage] = useState<any>([]);
+  const [orientation, setOrientation] = useState<OrientationType>({
+    width: 1920,
+    heigth: 1080,
+  });
 
   function handleUploadImage(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files?.length === 0 || e.target.files === null) {
@@ -12,15 +17,14 @@ const App = () => {
       return;
     }
 
-    setImages(e.target.files);
-    console.log(images);
+    setImage(e.target.files[0]);
   }
 
   return (
     <div className="flex flex-col p-3 h-screen">
       <Header />
       <div className="flex justify-center items-center flex-1">
-        {images.length === 0 ? (
+        {image.length === 0 ? (
           <>
             <Uploader />
             <input
@@ -31,7 +35,7 @@ const App = () => {
             />
           </>
         ) : (
-          <ImageProcessor setImages={setImages} />
+          <ImageProcessor setImage={setImage} orientation={orientation} />
         )}
       </div>
       <footer>

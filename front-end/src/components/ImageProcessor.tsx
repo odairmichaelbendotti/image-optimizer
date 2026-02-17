@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Operations from "./Operations";
-import Scale from "./Scale";
-import Compress from "./Compress";
+import Scale from "./Operations/Scale";
+import Compress from "./Operations/Compress";
+import Convert from "./Operations/Convert";
+import { type ImageProcessorType } from "../types/ImageProcessor";
 
-const ImageProcessor = ({ setImages }: { setImages: React.Dispatch<any> }) => {
+const ImageProcessor = ({ setImage, orientation }: ImageProcessorType) => {
   const [operation, setOperation] = useState<string>("Operações");
 
   function handleChangeInterface(operation: string) {
@@ -25,19 +27,21 @@ const ImageProcessor = ({ setImages }: { setImages: React.Dispatch<any> }) => {
         <div className="flex-1">
           {operation === "Operações" && (
             <Operations
-              setImages={setImages}
+              setImages={setImage}
               handleChangeInterface={handleChangeInterface}
               setOperation={setOperation}
             />
           )}
 
           {operation === "Redimensionar" && (
-            <Scale setOperation={setOperation} />
+            <Scale setOperation={setOperation} orientation={orientation} />
           )}
 
           {operation === "Comprimir" && (
             <Compress setOperation={setOperation} />
           )}
+
+          {operation === "Converter" && <Convert setOperation={setOperation} />}
         </div>
       </div>
     </div>
