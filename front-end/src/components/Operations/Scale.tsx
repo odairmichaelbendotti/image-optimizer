@@ -1,9 +1,36 @@
 import { RectangleVertical, Scaling, Undo2 } from "lucide-react";
 import { type ScaleProps } from "../../types/Scale";
+import { processImageFile } from "../../utils/image-processor";
+import toast from "react-hot-toast";
 
-const Scale = ({ setOperation, orientation }: ScaleProps) => {
+const Scale = ({ setOperation, orientation, image }: ScaleProps) => {
+  async function handleSubmit(e: React.SubmitEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!image) {
+      toast.error("Erro ao processar imagem");
+      return;
+    }
+
+    const img = processImageFile(image);
+
+    // try {
+    //   const response = await fetch(`http://localhost:3000/upload`, {
+    //     method: "POST",
+    //   });
+
+    //   console.log(response);
+    // } catch (err) {
+    //   console.log(err);
+    //   throw new Error("Erro ao Redimensionar elemento");
+    // }
+  }
+
   return (
-    <div className="h-full mt-2 flex flex-col justify-between py-4 gap-4">
+    <form
+      className="h-full mt-2 flex flex-col justify-between py-4 gap-4"
+      onSubmit={handleSubmit}
+    >
       <div>
         {orientation.width > orientation.heigth && (
           <>
@@ -49,10 +76,10 @@ const Scale = ({ setOperation, orientation }: ScaleProps) => {
       </div>
 
       <div className="flex flex-col gap-2">
-        <div className="border flex items-center text-accent justify-center gap-2 cursor-pointer hover:opacity-80 border-surface bg-surface text-center rounded-md py-2">
+        <button className="border flex items-center text-accent justify-center gap-2 cursor-pointer hover:opacity-80 border-surface bg-surface text-center rounded-md py-2">
           <Scaling size={18} className="text-accent" />
           Redimensionar
-        </div>
+        </button>
         <div
           onClick={() => setOperation("Operações")}
           className="flex items-center justify-center cursor-pointer gap-2 border-2 border-background hover:border-surface transaction duration-150 py-2 rounded-md"
@@ -61,7 +88,7 @@ const Scale = ({ setOperation, orientation }: ScaleProps) => {
           Voltar
         </div>
       </div>
-    </div>
+    </form>
   );
 };
 

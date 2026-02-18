@@ -5,7 +5,11 @@ import Compress from "./Operations/Compress";
 import Convert from "./Operations/Convert";
 import { type ImageProcessorType } from "../types/ImageProcessor";
 
-const ImageProcessor = ({ setImage, orientation }: ImageProcessorType) => {
+const ImageProcessor = ({
+  setImage,
+  image,
+  orientation,
+}: ImageProcessorType) => {
   const [operation, setOperation] = useState<string>("Operações");
 
   function handleChangeInterface(operation: string) {
@@ -13,7 +17,6 @@ const ImageProcessor = ({ setImage, orientation }: ImageProcessorType) => {
     console.log(operation);
   }
 
-  console.log(window.innerWidth);
   return (
     <div className="w-full flex flex-col md:flex-row md:justify-center gap-4">
       <div className="md:max-w-200 w-fit md:h-100 h-full bg-accent rounded-xl p-4">
@@ -34,7 +37,11 @@ const ImageProcessor = ({ setImage, orientation }: ImageProcessorType) => {
           )}
 
           {operation === "Redimensionar" && (
-            <Scale setOperation={setOperation} orientation={orientation} />
+            <Scale
+              setOperation={setOperation}
+              orientation={orientation}
+              image={image}
+            />
           )}
 
           {operation === "Comprimir" && (

@@ -12,7 +12,7 @@ const Operations = ({
   setOperation,
 }: OperationsProps) => {
   function handleCancelOperation() {
-    setImages([]);
+    setImages(null);
     setOperation("Operações");
   }
 
