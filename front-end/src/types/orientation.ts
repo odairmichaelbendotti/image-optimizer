@@ -1,4 +1,4 @@
 export type OrientationType = {
   width: number;
-  heigth: number;
+  height: number;
 };

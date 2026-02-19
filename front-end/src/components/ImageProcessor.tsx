@@ -17,11 +17,13 @@ const ImageProcessor = ({
     console.log(operation);
   }
 
+  if (!image) return;
+
   return (
     <div className="w-full flex flex-col md:flex-row md:justify-center gap-4">
       <div className="md:max-w-200 w-fit md:h-100 h-full bg-accent rounded-xl p-4">
         <img
-          src="./teste.png"
+          src={URL.createObjectURL(image)}
           className="max-w-full max-h-full object-fill rounded-lg mx-auto"
         />
       </div>

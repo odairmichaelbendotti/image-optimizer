@@ -8,8 +8,19 @@ const App = () => {
   const [image, setImage] = useState<File | null>(null);
   const [orientation, setOrientation] = useState<OrientationType>({
     width: 1920,
-    heigth: 1080,
+    height: 1080,
   });
+
+  function getImgDimension(file: File) {
+    const img = new Image();
+
+    img.onload = () => {
+      setOrientation({ width: img.width, height: img.height });
+    };
+    img.src = URL.createObjectURL(file);
+  }
+
+  console.log(orientation);
 
   function handleSelectImage(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.files?.length === 0 || e.target.files === null) {
@@ -17,10 +28,9 @@ const App = () => {
       return;
     }
 
+    getImgDimension(e.target.files[0]);
     setImage(e.target.files[0]);
   }
-
-  console.log(image);
 
   return (
     <div className="flex flex-col p-3 h-screen">
